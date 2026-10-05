@@ -1,0 +1,5 @@
+.sidebar { width: 200px; background-color: #f8fafc; border-right: 1px solid #e2e8f0; height: calc(100vh - 56px); padding: 1rem 0; }
+.modulo-title { font-size: 0.75rem; font-weight: bold; color: #94a3b8; padding: 0 1rem 0.5rem 1rem; }
+.menu-list { display: flex; flex-direction: column; }
+.menu-item { display: flex; align-items: center; gap: 0.5rem; padding: 0.6rem 1rem; color: #334155; text-decoration: none; font-size: 0.9rem; }
+.menu-item.activo { background-color: #0d2850; color: white; border-radius: 4px; margin: 0 0.5rem; }

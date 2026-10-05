@@ -1,0 +1,19 @@
+import { Component, signal } from '@angular/core';
+import { RouterOutlet } from '@angular/router';
+import { Header } from '../header/header';
+import { Sidebar } from '../sidebar/sidebar';
+
+@Component({
+  selector: 'app-main-layout',
+  standalone: true,
+  imports: [RouterOutlet, Header, Sidebar],
+  templateUrl: './main-layout.html',
+  styleUrl: './main-layout.css'
+})
+export class MainLayout {
+  menuColapsado = signal(false);
+
+  alternarMenu() {
+    this.menuColapsado.update(v => !v);
+  }
+}

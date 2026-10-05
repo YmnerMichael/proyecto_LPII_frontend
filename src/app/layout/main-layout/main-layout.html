@@ -1,0 +1,11 @@
+<div class="app-layout">
+  <app-header (toggleMenu)="alternarMenu()" />
+  <div class="body-container">
+    @if (!menuColapsado()) {
+      <app-sidebar />
+    }
+    <main class="content">
+      <router-outlet />
+    </main>
+  </div>
+</div>

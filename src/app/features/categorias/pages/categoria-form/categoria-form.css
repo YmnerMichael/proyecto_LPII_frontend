@@ -1,0 +1,10 @@
+.card { background: white; padding: 1.5rem; border-radius: 8px; max-width: 500px; margin: 0 auto; }
+.field { display: flex; flex-direction: column; margin-bottom: 1rem; }
+.field label { font-weight: 500; margin-bottom: 0.25rem; }
+.field input, .field textarea { padding: 0.5rem; border: 1px solid #cbd5e1; border-radius: 6px; }
+.field-checkbox { margin-bottom: 1.5rem; }
+.text-danger { color: #dc2626; font-size: 0.8rem; margin-top: 0.25rem; }
+.alerta-error { background-color: #fee2e2; color: #dc2626; padding: 0.75rem; border-radius: 6px; margin-bottom: 1rem; }
+.form-actions { display: flex; gap: 1rem; }
+.btn-primary { background-color: #0d2850; color: white; border: none; padding: 0.5rem 1rem; border-radius: 6px; cursor: pointer; }
+.btn-secondary { background-color: #e2e8f0; color: #334155; padding: 0.5rem 1rem; text-decoration: none; border-radius: 6px; }

@@ -1,0 +1,48 @@
+<div class="card">
+  <div class="header-container">
+    <h2>Categorías</h2>
+    <a routerLink="nuevo" class="btn-primary">+ Nueva categoría</a>
+  </div>
+
+  @if (error()) {
+    <div class="alerta-error">{{ error() }}</div>
+  }
+
+  <div class="search-box">
+    <input type="text" placeholder="Buscar por nombre..." [value]="filtro()" (input)="actualizarFiltro($event)" />
+  </div>
+
+  <table class="data-table">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Nombre</th>
+        <th>Descripción</th>
+        <th>Estado</th>
+        <th>Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      @for (cat of filtradas(); track cat.id) {
+        <tr>
+          <td>{{ cat.id }}</td>
+          <td><strong>{{ cat.nombre }}</strong></td>
+          <td>{{ cat.descripcion || '—' }}</td>
+          <td>
+            <span class="badge" [class.badge-activo]="cat.estado" [class.badge-inactivo]="!cat.estado">
+              {{ cat.estado ? 'Activo' : 'Inactivo' }}
+            </span>
+          </td>
+          <td class="actions">
+            <a [routerLink]="[cat.id, 'editar']" class="btn-action">Editar</a>
+            <button (click)="eliminar(cat.id)" class="btn-action btn-delete">Eliminar</button>
+          </td>
+        </tr>
+      } @empty {
+        <tr>
+          <td colspan="5" class="empty-msg">No se encontraron categorías.</td>
+        </tr>
+      }
+    </tbody>
+  </table>
+</div>

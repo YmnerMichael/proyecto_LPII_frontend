@@ -1,0 +1,65 @@
+<div class="card">
+  <h2>{{ esEdicion() ? 'Editar cliente' : 'Nuevo cliente' }}</h2>
+
+  @if (error()) {
+    <div class="alerta-error">{{ error() }}</div>
+  }
+
+  <form [formGroup]="form" (ngSubmit)="guardar()">
+    <div class="form-grid">
+      <div class="field">
+        <label for="dni">DNI *</label>
+        <input id="dni" type="text" inputmode="numeric" maxlength="8" formControlName="dni" />
+        @if (form.get('dni')?.touched && form.get('dni')?.invalid) {
+          <small class="text-danger">Ingresa exactamente 8 dígitos.</small>
+        }
+      </div>
+
+      <div class="field">
+        <label for="nombres">Nombres *</label>
+        <input id="nombres" type="text" maxlength="100" formControlName="nombres" />
+        @if (form.get('nombres')?.touched && form.get('nombres')?.invalid) {
+          <small class="text-danger">Los nombres son obligatorios (de 2 a 100 caracteres).</small>
+        }
+      </div>
+
+      <div class="field">
+        <label for="apellidos">Apellidos *</label>
+        <input id="apellidos" type="text" maxlength="100" formControlName="apellidos" />
+        @if (form.get('apellidos')?.touched && form.get('apellidos')?.invalid) {
+          <small class="text-danger">Los apellidos son obligatorios (de 2 a 100 caracteres).</small>
+        }
+      </div>
+
+      <div class="field">
+        <label for="email">Correo electrónico *</label>
+        <input id="email" type="email" maxlength="150" formControlName="email" />
+        @if (form.get('email')?.touched && form.get('email')?.invalid) {
+          <small class="text-danger">Ingresa un correo válido (máx. 150 caracteres).</small>
+        }
+      </div>
+
+      <div class="field">
+        <label for="telefono">Teléfono</label>
+        <input id="telefono" type="tel" inputmode="numeric" maxlength="9" formControlName="telefono" />
+        @if (form.get('telefono')?.touched && form.get('telefono')?.invalid) {
+          <small class="text-danger">El teléfono debe contener 9 dígitos.</small>
+        }
+      </div>
+
+      <div class="field">
+        <label for="direccion">Dirección</label>
+        <input id="direccion" type="text" maxlength="250" formControlName="direccion" />
+      </div>
+    </div>
+
+    <div class="field-checkbox">
+      <label><input type="checkbox" formControlName="estado" /> Cliente activo</label>
+    </div>
+
+    <div class="form-actions">
+      <button type="submit" class="btn-primary" [disabled]="form.invalid">Guardar</button>
+      <a routerLink="/clientes" class="btn-secondary">Cancelar</a>
+    </div>
+  </form>
+</div>
