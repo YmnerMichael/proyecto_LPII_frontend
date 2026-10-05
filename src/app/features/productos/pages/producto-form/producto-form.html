@@ -1,0 +1,83 @@
+<section class="card">
+  <h2>{{ esEdicion() ? 'Editar producto' : 'Nuevo producto' }}</h2>
+
+  @if (error()) {
+    <div class="alerta-error" role="alert">{{ error() }}</div>
+  }
+
+  @if (cargando()) {
+    <p class="status" role="status">Cargando datos…</p>
+  } @else if (!hayCategoriasActivas() && !esEdicion()) {
+    <div class="alerta-info">
+      No hay categorías activas. Registra una categoría antes de crear productos.
+      <a routerLink="/categorias/nuevo">Nueva categoría</a>
+    </div>
+  } @else {
+    @if (categoriaInactiva()) {
+      <div class="alerta-info" role="status">
+        La categoría seleccionada está inactiva. Selecciona una categoría activa antes de guardar.
+      </div>
+    }
+
+    <form [formGroup]="form" (ngSubmit)="guardar()" class="formulario">
+      <div class="field">
+        <label for="categoriaId">Categoría *</label>
+        <select id="categoriaId" formControlName="categoriaId" (change)="cambiarCategoria()">
+          <option [ngValue]="0" disabled>Seleccione una categoría</option>
+          @for (categoria of categoriasDisponibles(); track categoria.id) {
+            <option [ngValue]="categoria.id">
+              {{ categoria.nombre }}{{ !categoria.estado ? ' (inactiva)' : '' }}
+            </option>
+          }
+        </select>
+        @if (form.controls.categoriaId.touched && form.controls.categoriaId.invalid) {
+          <small class="text-danger">Selecciona una categoría válida.</small>
+        }
+      </div>
+
+      <div class="field">
+        <label for="nombre">Nombre *</label>
+        <input id="nombre" type="text" formControlName="nombre" maxlength="100" />
+        @if (form.controls.nombre.touched && form.controls.nombre.invalid) {
+          <small class="text-danger">El nombre es obligatorio y debe tener entre 3 y 100 caracteres.</small>
+        }
+      </div>
+
+      <div class="field">
+        <label for="descripcion">Descripción</label>
+        <textarea id="descripcion" formControlName="descripcion" maxlength="200" rows="3"></textarea>
+        @if (form.controls.descripcion.touched && form.controls.descripcion.invalid) {
+          <small class="text-danger">La descripción no debe superar los 200 caracteres.</small>
+        }
+      </div>
+
+      <div class="field">
+        <label for="precio">Precio (S/) *</label>
+        <input id="precio" type="number" formControlName="precio" min="0.01" step="0.01" />
+        @if (form.controls.precio.touched && form.controls.precio.invalid) {
+          <small class="text-danger">El precio debe ser mayor o igual a S/ 0.01.</small>
+        }
+      </div>
+
+      <div class="field">
+        <label for="stock">Stock *</label>
+        <input id="stock" type="number" formControlName="stock" min="0" step="1" />
+        @if (form.controls.stock.touched && form.controls.stock.invalid) {
+          <small class="text-danger">El stock debe ser un número entero mayor o igual a 0.</small>
+        }
+      </div>
+
+      <label class="field-checkbox">
+        <input type="checkbox" formControlName="estado" />
+        Activo
+      </label>
+
+      <div class="form-actions">
+        <button type="submit" class="btn-primary" [disabled]="form.invalid || guardando() || categoriaInactiva()">
+          {{ guardando() ? 'Guardando…' : esEdicion() ? 'Guardar cambios' : 'Registrar' }}
+        </button>
+        <a routerLink="/productos" class="btn-secondary">Cancelar</a>
+      </div>
+    </form>
+  }
+</section>

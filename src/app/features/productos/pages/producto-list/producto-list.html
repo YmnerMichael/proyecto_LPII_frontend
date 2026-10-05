@@ -1,0 +1,97 @@
+<section class="card">
+  <header class="header-container">
+    <div>
+      <h2>Productos</h2>
+      <p class="subtitle">Administra los productos y su categoría.</p>
+    </div>
+    <a routerLink="nuevo" class="btn-primary">+ Nuevo producto</a>
+  </header>
+
+  @if (error()) {
+    <div class="alerta-error" role="alert">{{ error() }}</div>
+  }
+
+  <div class="filters">
+    <label>
+      Categoría
+      <select aria-label="Filtrar por categoría" (change)="cambiarCategoria($event)">
+        <option value="">Todas</option>
+        @for (categoria of categorias(); track categoria.id) {
+          <option [value]="categoria.id">{{ categoria.nombre }}</option>
+        }
+      </select>
+    </label>
+    <label>
+      Por página
+      <select [value]="tamano()" (change)="cambiarTamano($event)">
+        <option value="5">5</option>
+        <option value="10">10</option>
+        <option value="20">20</option>
+      </select>
+    </label>
+  </div>
+
+  @if (cargando()) {
+    <p class="status" role="status">Cargando productos…</p>
+  } @else if (resultado()) {
+    <div class="table-container">
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th><button class="sort-button" (click)="ordenar('nombre')">Nombre</button></th>
+            <th>Descripción</th>
+            <th>Categoría</th>
+            <th><button class="sort-button" (click)="ordenar('precio')">Precio</button></th>
+            <th><button class="sort-button" (click)="ordenar('stock')">Stock</button></th>
+            <th>Estado</th>
+            <th>Acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (producto of productos(); track producto.id) {
+            <tr>
+              <td>{{ producto.id }}</td>
+              <td><strong>{{ producto.nombre }}</strong></td>
+              <td>{{ producto.descripcion || '—' }}</td>
+              <td>{{ producto.categoriaNombre }}</td>
+              <td>{{ producto.precio | currency:'PEN':'symbol':'1.2-2' }}</td>
+              <td>{{ producto.stock }}</td>
+              <td>
+                <span class="badge" [class.badge-activo]="producto.estado" [class.badge-inactivo]="!producto.estado">
+                  {{ producto.estado ? 'Activo' : 'Inactivo' }}
+                </span>
+              </td>
+              <td class="actions">
+                <a [routerLink]="[producto.id, 'editar']" class="btn-action">Editar</a>
+                <button
+                  type="button"
+                  class="btn-action btn-delete"
+                  [disabled]="!producto.estado"
+                  (click)="eliminar(producto)">
+                  Dar de baja
+                </button>
+              </td>
+            </tr>
+          } @empty {
+            <tr>
+              <td colspan="8" class="empty-msg">
+                {{ categoriaFiltro() === null ? 'No hay productos registrados.' : 'No hay productos de esta categoría en esta página.' }}
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+
+    <footer class="pagination">
+      <span>{{ productosFiltrados().length }} producto(s) · Página {{ pagina() + 1 }} de {{ totalPaginas() }}</span>
+      <div>
+        <button type="button" class="btn-action" [disabled]="pagina() === 0" (click)="cambiarPagina(0)">«</button>
+        <button type="button" class="btn-action" [disabled]="pagina() === 0" (click)="cambiarPagina(pagina() - 1)">Anterior</button>
+        <button type="button" class="btn-action" [disabled]="pagina() + 1 >= totalPaginas()" (click)="cambiarPagina(pagina() + 1)">Siguiente</button>
+        <button type="button" class="btn-action" [disabled]="pagina() + 1 >= totalPaginas()" (click)="cambiarPagina(totalPaginas() - 1)">»</button>
+      </div>
+    </footer>
+  }
+</section>
