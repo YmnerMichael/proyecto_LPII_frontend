@@ -35,6 +35,12 @@
           </td>
           <td class="actions">
             <a [routerLink]="[cat.id, 'editar']" class="btn-action">Editar</a>
+            <a
+              [routerLink]="['/productos']"
+              [queryParams]="{ categoriaId: cat.id }"
+              class="btn-action btn-info">
+              Ver productos
+            </a>
             <button (click)="eliminar(cat.id)" class="btn-action btn-delete">Eliminar</button>
           </td>
         </tr>

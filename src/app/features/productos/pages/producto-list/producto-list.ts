@@ -1,4 +1,4 @@
-import { Component, OnInit, computed, inject, signal } from '@angular/core';
+import { Component, Input, OnInit, computed, inject, signal } from '@angular/core';
 import { CurrencyPipe } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { CategoriaService } from '../../../categorias/services/categoria.service';
@@ -18,6 +18,8 @@ export class ProductoList implements OnInit {
   private readonly productosService = inject(ProductoService);
   private readonly categoriasService = inject(CategoriaService);
 
+  @Input() categoriaId?: string;
+
   protected readonly resultado = signal<Producto[] | null>(null);
   protected readonly categorias = signal<Categoria[]>([]);
   protected readonly pagina = signal(0);
@@ -27,6 +29,7 @@ export class ProductoList implements OnInit {
   protected readonly categoriaFiltro = signal<number | null>(null);
   protected readonly cargando = signal(false);
   protected readonly error = signal<string | null>(null);
+  protected readonly notaFiltro = signal<string | null>(null);
 
   protected readonly productosFiltrados = computed(() => {
     const contenido = this.resultado() ?? [];
@@ -58,7 +61,23 @@ export class ProductoList implements OnInit {
       next: categorias => this.categorias.set(categorias),
       error: err => this.error.set(obtenerMensajeError(err))
     });
+
+    let filtroInvalido = false;
+    if (this.categoriaId) {
+      const idNum = Number(this.categoriaId);
+      if (Number.isSafeInteger(idNum) && idNum > 0) {
+        this.categoriaFiltro.set(idNum);
+        this.tamano.set(100);
+        this.notaFiltro.set('Mostrando productos de la categoría seleccionada; hasta 100 productos por página.');
+      } else {
+        filtroInvalido = true;
+      }
+    }
+
     this.cargar();
+    if (filtroInvalido) {
+      this.error.set('El identificador de categoría de la URL no es válido.');
+    }
   }
 
   cargar(): void {
@@ -79,13 +98,12 @@ export class ProductoList implements OnInit {
   cambiarPagina(pagina: number): void {
     if (pagina >= 0 && pagina < this.totalPaginas() && pagina !== this.pagina()) {
       this.pagina.set(pagina);
-      this.cargar();
     }
   }
 
   cambiarTamano(event: Event): void {
     const valor = Number((event.target as HTMLSelectElement).value);
-    if (![5, 10, 20].includes(valor)) return;
+    if (![5, 10, 20, 100].includes(valor)) return;
     this.tamano.set(valor);
     this.pagina.set(0);
   }
