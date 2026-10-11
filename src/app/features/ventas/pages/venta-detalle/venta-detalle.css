@@ -1,0 +1,32 @@
+.page { max-width: 900px; margin: 0 auto; }
+.card { padding: 1.5rem; border-radius: 8px; background: #fff; box-shadow: 0 1px 3px rgb(0 0 0 / 10%); }
+.comprobante { position: relative; max-width: 760px; margin: 0 auto; }
+.negocio { display: flex; justify-content: space-between; align-items: flex-start; gap: 16px; padding-bottom: 12px; margin-bottom: 12px; border-bottom: 3px solid #f2a900; }
+.negocio div { display: flex; flex-direction: column; gap: 2px; }
+.marca { color: #0d2850; font-size: 22px; }
+.negocio span { color: #4b5563; font-size: 14px; }
+.numero { align-items: flex-end; text-align: right; }
+.numero strong { color: #0d2850; font-size: 20px; }
+.datos { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 8px 16px; margin: 0 0 16px; }
+.datos dt { color: #6b7280; font-size: 12px; letter-spacing: .04em; text-transform: uppercase; }
+.datos dd { margin: 2px 0 0; font-weight: 600; }
+.tabla { width: 100%; border-collapse: collapse; background: #fff; }
+.tabla th, .tabla td { padding: 10px 12px; border-bottom: 1px solid #e2e8f0; text-align: left; }
+.tabla th { background: #0f2e5c; color: #fff; }
+.monto { text-align: right !important; white-space: nowrap; }
+.total { color: #0d2850; font-size: 18px; font-weight: 700; }
+.badge { display: inline-block; padding: 3px 8px; border-radius: 999px; background: #dcfce7; color: #166534; font-size: 12px; font-weight: 700; }
+.badge.inactivo { background: #fee2e2; color: #b42318; }
+.exito { margin-bottom: 16px; padding: 12px 16px; border-radius: 8px; background: #dcfce7; color: #166534; }
+.alerta { margin-bottom: 16px; padding: 12px 16px; border-radius: 8px; background: #fee2e2; color: #b91c1c; }
+.acciones { display: flex; justify-content: flex-end; gap: 8px; margin-top: 16px; }
+.btn { display: inline-block; padding: 0.6rem 1rem; border: 0; border-radius: 6px; background: #e2e8f0; color: #334155; font: inherit; text-decoration: none; cursor: pointer; }
+.btn-primary { background: #0d2850; color: #fff; }
+.sello { position: absolute; top: 40%; left: 50%; margin: 0; transform: translate(-50%, -50%) rotate(-18deg); color: rgb(180 35 24 / 18%); font-size: 64px; font-weight: 800; letter-spacing: .1em; pointer-events: none; }
+.pie { margin-top: 24px; color: #4b5563; font-size: 12px; text-align: center; }
+.pie p { margin: 2px 0; }
+.solo-impresion { display: none; }
+@media print {
+  .comprobante { max-width: none; padding: 0; }
+  .datos dd .badge { padding: 0; background: none; color: #000; }
+}

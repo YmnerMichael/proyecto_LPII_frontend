@@ -44,6 +44,12 @@ To execute unit tests with the [Vitest](https://vitest.dev/) test runner, use th
 ng test
 ```
 
+## Ventas
+
+El módulo `/ventas` registra ventas con un detalle dinámico, confirma la operación antes del POST y muestra un comprobante basado en la respuesta del backend. Incluye consulta paginada por cliente, estado y fechas, impresión de comprobantes y reporte de importes por categoría.
+
+El reporte agrupa los detalles por la categoría actual del producto en el catálogo. Como la respuesta de ventas no incluye la categoría histórica, los productos que ya no están disponibles aparecen como «Categoría no disponible».
+
 ## Running end-to-end tests
 
 For end-to-end (e2e) testing, run:

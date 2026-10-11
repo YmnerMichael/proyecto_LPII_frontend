@@ -8,5 +8,6 @@ export const MENU: MenuItem[] = [
   { etiqueta: 'Inicio', ruta: '/inicio', icono: '🏠' },
   { etiqueta: 'Categorías', ruta: '/categorias', icono: '📁' },
   { etiqueta: 'Clientes', ruta: '/clientes', icono: '👥' },
-  { etiqueta: 'Productos', ruta: '/productos', icono: '💊' }
+  { etiqueta: 'Productos', ruta: '/productos', icono: '💊' },
+  { etiqueta: 'Ventas', ruta: '/ventas', icono: '🧾' }
 ];

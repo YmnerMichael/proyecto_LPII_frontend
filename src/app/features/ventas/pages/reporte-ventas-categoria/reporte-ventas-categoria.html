@@ -1,0 +1,47 @@
+<section class="page">
+  <header class="page-header">
+    <div>
+      <h2>Reporte de ventas por categoría</h2>
+      <p>Importes de ventas registradas agrupados por la categoría actual de cada producto.</p>
+    </div>
+    <a routerLink="/ventas" class="btn no-imprimir">Volver a ventas</a>
+  </header>
+
+  <form [formGroup]="filtros" (ngSubmit)="buscar()" class="card filtros no-imprimir">
+    <label>Desde <input class="input" type="date" formControlName="desde" /></label>
+    <label>Hasta <input class="input" type="date" formControlName="hasta" /></label>
+    <div class="acciones">
+      <button type="button" class="btn" (click)="limpiar()">Limpiar</button>
+      <button type="submit" class="btn btn-primary">Actualizar reporte</button>
+      <button type="button" class="btn" [disabled]="cargando()" (click)="imprimir()">Imprimir</button>
+    </div>
+  </form>
+
+  @if (error()) {
+    <div class="alerta" role="alert">{{ error() }}</div>
+  }
+  @if (cargando()) {
+    <p role="status">Calculando el reporte…</p>
+  } @else {
+    <table class="tabla">
+      <thead>
+        <tr><th>Categoría</th><th class="monto">Unidades vendidas</th><th class="monto">Ventas</th><th class="monto">Total</th></tr>
+      </thead>
+      <tbody>
+        @for (fila of filas(); track fila.categoriaId ?? fila.categoriaNombre) {
+          <tr>
+            <td>{{ fila.categoriaNombre }}</td>
+            <td class="monto">{{ fila.cantidad }}</td>
+            <td class="monto">{{ fila.ventas }}</td>
+            <td class="monto">{{ fila.total | currency: 'PEN' : 'S/ ' }}</td>
+          </tr>
+        } @empty {
+          <tr><td colspan="4" class="vacio">No hay ventas registradas para el periodo elegido.</td></tr>
+        }
+      </tbody>
+      <tfoot>
+        <tr><th colspan="3">Total registrado</th><th class="monto">{{ total() | currency: 'PEN' : 'S/ ' }}</th></tr>
+      </tfoot>
+    </table>
+  }
+</section>
