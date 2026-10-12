@@ -46,9 +46,9 @@ ng test
 
 ## Ventas
 
-El módulo `/ventas` registra ventas con un detalle dinámico, confirma la operación antes del POST y muestra un comprobante basado en la respuesta del backend. Incluye consulta paginada por cliente, estado y fechas, impresión de comprobantes y reporte de importes por categoría.
+El módulo `/ventas` registra ventas con un detalle dinámico, confirma la operación antes del POST y muestra un comprobante basado en la respuesta del backend. Incluye consulta paginada por cliente, estado y fechas e impresión de comprobantes.
 
-El reporte agrupa los detalles por la categoría actual del producto en el catálogo. Como la respuesta de ventas no incluye la categoría histórica, los productos que ya no están disponibles aparecen como «Categoría no disponible».
+El módulo `/reportes/ventas-por-categoria` consume el reporte agregado del backend, acepta fechas opcionales y compara el monto vendido por categoría.
 
 ## Running end-to-end tests
 

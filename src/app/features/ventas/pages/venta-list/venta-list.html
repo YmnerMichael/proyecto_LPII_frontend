@@ -2,7 +2,7 @@
   <header class="page-header">
     <h2>Consulta de ventas</h2>
     <div class="botones no-imprimir">
-      <a routerLink="reporte-categorias" class="btn">Reporte por categoría</a>
+      <a routerLink="/reportes/ventas-por-categoria" class="btn">Reporte por categoría</a>
       <button type="button" class="btn" [disabled]="!resultado()?.contenido?.length" (click)="imprimirConsulta()">
         🖨 Imprimir consulta
       </button>

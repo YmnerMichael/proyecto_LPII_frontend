@@ -1,6 +1,10 @@
 import { HttpErrorResponse } from '@angular/common/http';
 
-export function obtenerMensajeError(err: HttpErrorResponse): string {
+export function obtenerMensajeError(err: HttpErrorResponse | Error): string {
+  if (err instanceof Error && !(err instanceof HttpErrorResponse)) {
+    return err.message;
+  }
+
   if (err.status === 0) {
     return 'No se pudo conectar con el servidor backend.';
   }

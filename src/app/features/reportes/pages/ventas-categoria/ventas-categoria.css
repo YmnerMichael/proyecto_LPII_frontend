@@ -1,0 +1,32 @@
+.page { max-width: 1100px; margin: 0 auto; }
+.page-header { margin-bottom: 16px; }
+.page-header h2 { margin: 0; color: #0d2850; }
+.page-header p { margin: 6px 0 0; color: #4b5563; }
+.card { padding: 1.25rem; border-radius: 8px; background: #fff; box-shadow: 0 1px 3px rgb(0 0 0 / 10%); }
+.filtros { display: flex; flex-wrap: wrap; align-items: end; gap: 12px; margin-bottom: 16px; }
+.filtros label { display: flex; min-width: 180px; flex-direction: column; gap: 4px; font-size: 14px; font-weight: 600; }
+.input { box-sizing: border-box; padding: 0.6rem; border: 1px solid #cbd5e1; border-radius: 6px; background: #fff; font: inherit; }
+.acciones { display: flex; flex-wrap: wrap; gap: 8px; }
+.btn { display: inline-block; padding: 0.6rem 1rem; border: 0; border-radius: 6px; background: #e2e8f0; color: #334155; font: inherit; cursor: pointer; }
+.btn-primary { background: #0d2850; color: #fff; }
+.btn:disabled { opacity: .55; cursor: not-allowed; }
+.tabla-contenedor { overflow-x: auto; padding: 0; }
+.tabla { width: 100%; border-collapse: collapse; background: #fff; }
+.tabla th, .tabla td { padding: 12px 14px; border-bottom: 1px solid #e2e8f0; text-align: left; }
+.tabla thead th { background: #0f2e5c; color: #fff; }
+.tabla tfoot th { background: #e9f0f9; color: #0d2850; }
+.tabla .numero { text-align: right; white-space: nowrap; }
+.barra-fondo { width: 100%; min-width: 100px; height: 14px; overflow: hidden; border-radius: 999px; background: #e2e8f0; }
+.barra { height: 100%; min-width: 0; border-radius: inherit; background: #2563eb; transition: width 180ms ease-in-out; }
+.alerta { margin-bottom: 16px; padding: 12px 16px; border-radius: 8px; background: #fee2e2; color: #b91c1c; }
+.estado { color: #475569; }
+.vacio { padding: 24px; border-radius: 8px; background: #fff; color: #6b7280; text-align: center; }
+@media (max-width: 700px) {
+  .filtros { align-items: stretch; flex-direction: column; }
+  .filtros label { min-width: 0; }
+}
+@media print {
+  .filtros { display: none; }
+  .tabla thead th { background: #fff; color: #000; border-bottom: 2px solid #0f2e5c; }
+  .barra-fondo { print-color-adjust: exact; -webkit-print-color-adjust: exact; }
+}

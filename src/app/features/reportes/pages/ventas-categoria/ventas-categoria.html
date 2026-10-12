@@ -1,0 +1,76 @@
+<section class="page">
+  <header class="page-header">
+    <div>
+      <h2>Reporte de ventas por categoría</h2>
+      <p>Compara las unidades y los importes vendidos en el periodo seleccionado.</p>
+    </div>
+  </header>
+
+  <form [formGroup]="filtros" (ngSubmit)="generar()" class="card filtros">
+    <label>
+      Desde
+      <input class="input" type="date" formControlName="desde" />
+    </label>
+    <label>
+      Hasta
+      <input class="input" type="date" formControlName="hasta" />
+    </label>
+    <div class="acciones">
+      <button type="button" class="btn" [disabled]="cargando()" (click)="limpiar()">Limpiar</button>
+      <button type="submit" class="btn btn-primary" [disabled]="cargando()">
+        {{ cargando() ? 'Generando…' : 'Generar' }}
+      </button>
+    </div>
+  </form>
+
+  @if (error()) {
+    <div class="alerta" role="alert">{{ error() }}</div>
+  }
+
+  @if (cargando()) {
+    <p class="estado" role="status">Cargando el reporte…</p>
+  } @else if (generado()) {
+    @if (filas().length) {
+      <div class="card tabla-contenedor">
+        <table class="tabla">
+          <thead>
+            <tr>
+              <th>Categoría</th>
+              <th class="numero">Unidades vendidas</th>
+              <th class="numero">Monto total</th>
+              <th>Comparación</th>
+            </tr>
+          </thead>
+          <tbody>
+            @for (fila of filas(); track fila.categoriaId) {
+              <tr>
+                <td>{{ fila.categoriaNombre }}</td>
+                <td class="numero">{{ fila.cantidadVendida }}</td>
+                <td class="numero">{{ fila.montoTotal | currency: 'PEN' : 'S/ ' }}</td>
+                <td>
+                  <div
+                    class="barra-fondo"
+                    role="img"
+                    [attr.aria-label]="'Monto relativo de ' + fila.categoriaNombre + ': ' + (anchoBarra(fila) | number: '1.0-1') + '%'"
+                  >
+                    <div class="barra" [style.width.%]="anchoBarra(fila)"></div>
+                  </div>
+                </td>
+              </tr>
+            }
+          </tbody>
+          <tfoot>
+            <tr>
+              <th>Total</th>
+              <th class="numero">{{ totalUnidades() }}</th>
+              <th class="numero">{{ montoTotal() | currency: 'PEN' : 'S/ ' }}</th>
+              <th></th>
+            </tr>
+          </tfoot>
+        </table>
+      </div>
+    } @else {
+      <p class="vacio" role="status">No hay ventas en el periodo seleccionado.</p>
+    }
+  }
+</section>
