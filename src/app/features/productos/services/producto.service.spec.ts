@@ -19,7 +19,7 @@ describe('ProductoService', () => {
 
   afterEach(() => httpMock.verify());
 
-  it('lists products using the backend flat-array response', () => {
+  it('extracts products from the backend paginated response', () => {
     const respuesta: Producto[] = [{
       id: 8,
       nombre: 'Paracetamol 500 mg',
@@ -35,9 +35,22 @@ describe('ProductoService', () => {
       expect(resultado).toEqual(respuesta);
     });
 
-    const solicitud = httpMock.expectOne('http://localhost:8080/api/v1/productos');
+    const solicitud = httpMock.expectOne(
+      request => request.url === 'http://localhost:8080/api/v1/productos'
+    );
     expect(solicitud.request.method).toBe('GET');
-    solicitud.flush(respuesta);
+    expect(solicitud.request.params.get('pagina')).toBe('0');
+    expect(solicitud.request.params.get('tamanio')).toBe('100');
+    expect(solicitud.request.params.get('ordenarPor')).toBe('id');
+    expect(solicitud.request.params.get('direccion')).toBe('asc');
+    solicitud.flush({
+      contenido: respuesta,
+      pagina: 0,
+      tamanio: 100,
+      totalElementos: 1,
+      totalPaginas: 1,
+      ultima: true
+    });
   });
 
   it('sends the complete backend DTO when creating a product', () => {

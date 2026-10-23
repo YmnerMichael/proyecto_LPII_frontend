@@ -1,7 +1,7 @@
 <aside class="sidebar">
   <div class="modulo-title">MÓDULOS</div>
   <nav class="menu-list">
-    @for (item of menu; track item.ruta) {
+    @for (item of menu(); track item.ruta) {
       <a [routerLink]="item.ruta" routerLinkActive="activo" class="menu-item">
         <span class="icono">{{ item.icono }}</span>
         <span>{{ item.etiqueta }}</span>

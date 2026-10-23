@@ -4,6 +4,12 @@
     <h1 class="brand">PharmaSoft</h1>
   </div>
   <div class="right-section">
-    <span class="user-info">Invitado</span>
+    @if (auth.sesion(); as sesion) {
+      <div class="user-details">
+        <span class="user-info">{{ sesion.nombreCompleto }}</span>
+        <span class="user-role">{{ sesion.roles.join(' · ') }} · expira {{ sesion.expiraEn | date: 'HH:mm' }}</span>
+      </div>
+      <button type="button" class="btn-logout" (click)="salir()">Cerrar sesión</button>
+    }
   </div>
 </header>

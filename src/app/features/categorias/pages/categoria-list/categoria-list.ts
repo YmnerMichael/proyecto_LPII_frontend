@@ -1,5 +1,6 @@
 import { Component, OnInit, inject, signal, computed } from '@angular/core';
 import { RouterLink } from '@angular/router';
+import { SiPermiso } from '../../../../shared/directives/si-permiso';
 import { CategoriaService } from '../../services/categoria.service';
 import { Categoria } from '../../models/categoria.model';
 import { obtenerMensajeError } from '../../../../core/utils/http-error';
@@ -7,7 +8,7 @@ import { obtenerMensajeError } from '../../../../core/utils/http-error';
 @Component({
   selector: 'app-categoria-list',
   standalone: true,
-  imports: [RouterLink],
+  imports: [RouterLink, SiPermiso],
   templateUrl: './categoria-list.html',
   styleUrl: './categoria-list.css'
 })

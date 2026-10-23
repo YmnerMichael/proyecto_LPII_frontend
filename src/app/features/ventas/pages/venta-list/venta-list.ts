@@ -3,7 +3,9 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { Component, computed, inject, OnInit, signal } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
+import { AuthService } from '../../../../core/auth/auth-service';
 import { obtenerMensajeError } from '../../../../core/utils/http-error';
+import { SiPermiso } from '../../../../shared/directives/si-permiso';
 import { Cliente } from '../../../clientes/models/cliente.model';
 import { ClienteService } from '../../../clientes/services/cliente.service';
 import { EstadoVenta, FiltroVentas, Venta } from '../../models/venta.model';
@@ -13,12 +15,13 @@ import { PaginaResponse } from '../../../../core/models/pagina-response';
 @Component({
   selector: 'app-venta-list',
   standalone: true,
-  imports: [ReactiveFormsModule, RouterLink, CurrencyPipe, DatePipe],
+  imports: [ReactiveFormsModule, RouterLink, CurrencyPipe, DatePipe, SiPermiso],
   templateUrl: './venta-list.html',
   styleUrl: './venta-list.css'
 })
 export class VentaList implements OnInit {
   private readonly fb = inject(FormBuilder);
+  private readonly auth = inject(AuthService);
   private readonly ventaService = inject(VentaService);
   private readonly clienteService = inject(ClienteService);
 
@@ -43,10 +46,12 @@ export class VentaList implements OnInit {
   );
 
   ngOnInit(): void {
-    this.clienteService.listar().subscribe({
-      next: clientes => this.clientes.set(clientes),
-      error: (err: HttpErrorResponse) => this.error.set(obtenerMensajeError(err))
-    });
+    if (this.auth.tienePermiso('CLIENTES_LEER')) {
+      this.clienteService.listar().subscribe({
+        next: clientes => this.clientes.set(clientes),
+        error: (err: HttpErrorResponse) => this.error.set(obtenerMensajeError(err))
+      });
+    }
     this.cargar();
   }
 

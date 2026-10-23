@@ -50,6 +50,14 @@ El módulo `/ventas` registra ventas con un detalle dinámico, confirma la opera
 
 El módulo `/reportes/ventas-por-categoria` consume el reporte agregado del backend, acepta fechas opcionales y compara el monto vendido por categoría.
 
+## Seguridad
+
+El acceso inicia en `/login` y consume `POST /api/v1/auth/login`. La SPA conserva en `sessionStorage` el token y los datos de sesión hasta su vencimiento; los interceptores agregan el token solo a las llamadas de la API y regresan al login ante un `401`. Las rutas, opciones del menú y acciones de escritura se filtran por los permisos recibidos del backend. Un `403` conserva la sesión y muestra la página de acceso denegado.
+
+El vendedor puede consultar categorías y productos y registrar/consultar ventas; puede leer clientes para completar una venta, pero no administrar clientes ni editar el catálogo. El almacenero puede consultar y mantener categorías y productos, y consultar ventas sin registrarlas. Solo `ADMIN` recibe todos los permisos, incluidos clientes, reportes y administración de usuarios.
+
+El frontend permite al rol `ALMACENERO` consultar ventas sin recibir permisos de escritura. El backend también debe autorizar `VENTAS_LEER` para ese rol para que las consultas y detalles de ventas se completen; los guards y controles visuales del frontend no sustituyen esa autorización.
+
 ## Running end-to-end tests
 
 For end-to-end (e2e) testing, run:

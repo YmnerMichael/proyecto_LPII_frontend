@@ -1,7 +1,7 @@
 <div class="card">
   <div class="header-container">
     <h2>Categorías</h2>
-    <a routerLink="nuevo" class="btn-primary">+ Nueva categoría</a>
+    <a *appSiPermiso="'CATALOGO_ESCRIBIR'" routerLink="nuevo" class="btn-primary">+ Nueva categoría</a>
   </div>
 
   @if (error()) {
@@ -34,14 +34,17 @@
             </span>
           </td>
           <td class="actions">
-            <a [routerLink]="[cat.id, 'editar']" class="btn-action">Editar</a>
+            <a *appSiPermiso="'CATALOGO_ESCRIBIR'" [routerLink]="[cat.id, 'editar']" class="btn-action">Editar</a>
             <a
               [routerLink]="['/productos']"
               [queryParams]="{ categoriaId: cat.id }"
               class="btn-action btn-info">
               Ver productos
             </a>
-            <button (click)="eliminar(cat.id)" class="btn-action btn-delete">Eliminar</button>
+            <button
+              *appSiPermiso="'CATALOGO_ESCRIBIR'"
+              (click)="eliminar(cat.id)"
+              class="btn-action btn-delete">Eliminar</button>
           </td>
         </tr>
       } @empty {

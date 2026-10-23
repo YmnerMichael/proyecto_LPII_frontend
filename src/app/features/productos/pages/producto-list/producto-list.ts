@@ -3,20 +3,23 @@ import { CurrencyPipe } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { CategoriaService } from '../../../categorias/services/categoria.service';
 import { Categoria } from '../../../categorias/models/categoria.model';
+import { AuthService } from '../../../../core/auth/auth-service';
 import { obtenerMensajeError } from '../../../../core/utils/http-error';
 import { Direccion, OrdenProducto, Producto } from '../../models/producto.model';
 import { ProductoService } from '../../services/producto.service';
+import { SiPermiso } from '../../../../shared/directives/si-permiso';
 
 @Component({
   selector: 'app-producto-list',
   standalone: true,
-  imports: [CurrencyPipe, RouterLink],
+  imports: [CurrencyPipe, RouterLink, SiPermiso],
   templateUrl: './producto-list.html',
   styleUrl: './producto-list.css'
 })
 export class ProductoList implements OnInit {
   private readonly productosService = inject(ProductoService);
   private readonly categoriasService = inject(CategoriaService);
+  protected readonly auth = inject(AuthService);
 
   @Input() categoriaId?: string;
 

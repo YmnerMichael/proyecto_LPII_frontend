@@ -1,0 +1,63 @@
+.login-page {
+  min-height: 100vh;
+  display: grid;
+  place-items: center;
+  padding: 1rem;
+  background: linear-gradient(135deg, #0d2850, #1f5aa6);
+}
+
+.login-card {
+  width: min(100%, 25rem);
+}
+
+.brand {
+  margin: 0;
+  color: #f59e0b;
+  font-size: 1.4rem;
+  font-weight: 800;
+}
+
+h1 {
+  margin: 0.25rem 0 1.25rem;
+  color: #0d2850;
+  font-size: 1.5rem;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+}
+
+label {
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+.show-password {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-weight: 400;
+}
+
+.login-error,
+.session-warning {
+  padding: 0.75rem;
+  margin-bottom: 0.75rem;
+  border-radius: 0.5rem;
+}
+
+.login-error,
+.field-error {
+  color: #b42318;
+}
+
+.session-warning {
+  background: #fff6dc;
+  color: #7a5200;
+}
+
+button {
+  margin-top: 0.5rem;
+}

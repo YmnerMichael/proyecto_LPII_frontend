@@ -1,5 +1,7 @@
 import { Component, OnInit, inject, signal, computed } from '@angular/core';
 import { RouterLink } from '@angular/router';
+import { AuthService } from '../../../../core/auth/auth-service';
+import { SiPermiso } from '../../../../shared/directives/si-permiso';
 import { ClienteService } from '../../services/cliente.service';
 import { Cliente } from '../../models/cliente.model';
 import { obtenerMensajeError } from '../../../../core/utils/http-error';
@@ -7,12 +9,13 @@ import { obtenerMensajeError } from '../../../../core/utils/http-error';
 @Component({
   selector: 'app-cliente-list',
   standalone: true,
-  imports: [RouterLink],
+  imports: [RouterLink, SiPermiso],
   templateUrl: './cliente-list.html',
   styleUrl: './cliente-list.css'
 })
 export class ClienteList implements OnInit {
   private readonly service = inject(ClienteService);
+  protected readonly auth = inject(AuthService);
 
   protected readonly clientes = signal<Cliente[]>([]);
   protected readonly filtro = signal('');

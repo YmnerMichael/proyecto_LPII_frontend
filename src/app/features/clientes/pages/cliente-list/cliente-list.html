@@ -1,7 +1,7 @@
 <div class="card">
   <div class="header-container">
     <h2>Clientes</h2>
-    <a routerLink="nuevo" class="btn-primary">+ Nuevo cliente</a>
+    <a *appSiPermiso="'CLIENTES_ESCRIBIR'" routerLink="nuevo" class="btn-primary">+ Nuevo cliente</a>
   </div>
 
   @if (error()) {
@@ -22,7 +22,7 @@
           <th>Correo</th>
           <th>Teléfono</th>
           <th>Estado</th>
-          <th>Acciones</th>
+          <th *appSiPermiso="'CLIENTES_ESCRIBIR'">Acciones</th>
         </tr>
       </thead>
       <tbody>
@@ -38,14 +38,14 @@
                 {{ cliente.estado ? 'Activo' : 'Inactivo' }}
               </span>
             </td>
-            <td class="actions">
+            <td *appSiPermiso="'CLIENTES_ESCRIBIR'" class="actions">
               <a [routerLink]="[cliente.id, 'editar']" class="btn-action">Editar</a>
               <button (click)="eliminar(cliente.id)" class="btn-action btn-delete">Eliminar</button>
             </td>
           </tr>
         } @empty {
           <tr>
-            <td colspan="7" class="empty-msg">No se encontraron clientes.</td>
+            <td [attr.colspan]="auth.tienePermiso('CLIENTES_ESCRIBIR') ? 7 : 6" class="empty-msg">No se encontraron clientes.</td>
           </tr>
         }
       </tbody>
